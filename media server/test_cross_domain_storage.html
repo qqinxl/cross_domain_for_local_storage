@@ -1,0 +1,22 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Test cross domain storage</title>
+</head>
+<body>
+<br>
+<script language='javascript' src='http://afs.server/test/crossdomain.js'></script>
+<script type="text/javascript">
+	var remoteStorage = new CrossDomainStorage("http://afs.server", "/test/afs_cross_domain_storage.htm");
+    remoteStorage.setValue('cross.value', "sc-media.adjust-search.jp", function(key, value){
+       alert(key + ":" + value);
+    });
+
+    remoteStorage.getValue("cross.value", function(key, value){
+    	alert(key + ":" + value);
+    });
+
+</script>
+<br>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Cookie list page</title>
+</head>
+<body>
+    <button id="clear" onclick="clearAll();">Clear</button>
+    <h1>Cookie</h2>
+    <div id="cookie"></div>
+    <h1>Storage</h2>
+    <div id="storage"></div>
+    <script type="text/javascript">
+
+
+        var getLocalStorage = function(){
+            var arr = [];
+            for (var i=0, l=localStorage.length; i<l; i++){
+                var key = localStorage.key(i);
+                var value = localStorage[key];
+                arr[i] = key + "=" + value;
+            }
+            return arr;
+        }
+
+        var getCookies = function(){
+            var pairs = document.cookie.split(";");
+            var arr = [];
+            //var cookies = {};
+            for (var i=0; i<pairs.length; i++){
+                arr[i] = pairs[i];
+                //var pair = pairs[i].split("=");
+                //cookies[pair[0]] = unescape(pair[1]);
+            }
+            return arr;
+        }
+
+        var deleteAllCookies = function (){
+            var cookies = document.cookie.split(";");
+
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+        }
+
+        function showAll() {
+            document.getElementById("storage").innerHTML = getLocalStorage().join("<br/> ");
+            document.getElementById("cookie").innerHTML = getCookies().join("<br/> ");
+        };
+        function clearAll() {
+            localStorage.clear();
+            deleteAllCookies();
+            showAll();
+        };
+
+        showAll();
+    </script>
+</body>
+</html>
